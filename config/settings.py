@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     "django_filters",
     'drf_yasg',
     'django_celery_beat',
+
     "habit",
     "users",
 ]
@@ -71,7 +72,8 @@ WSGI_APPLICATION = "config.wsgi.application"
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     'DEFAULT_AUTHENTICATION_CLASSES': ['rest_framework_simplejwt.authentication.JWTAuthentication'],
-    'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.IsAuthenticated']
+    'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.AllowAny'],
+    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination', 'PAGE_SIZE': 3
 
 }
 
@@ -156,7 +158,6 @@ if CACHE_ENABLE:
             "LOCATION": "redis://127.0.0.1:6379/1",
         }
     }
-
 
 CELERY_TIMEZONE = TIME_ZONE
 CELERY_TASK_TRACK_STARTED = True
