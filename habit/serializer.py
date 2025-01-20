@@ -5,7 +5,7 @@ from habit.models import Habit
 
 class HabitSerializer(serializers.ModelSerializer):
     """ Сериализатор для модели HABIT """
-    owner = serializers.HiddenField(default=serializers.CurrentUserDefault)
+    owner = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
     class Meta:
         model = Habit
