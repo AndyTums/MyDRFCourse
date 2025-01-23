@@ -5,15 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7f115bea-b94c-44ba-816a-d7d575770264" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.env.sample" beforeDir="false" afterPath="$PROJECT_DIR$/.env.sample" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/habit/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/habit/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/habit/services.py" beforeDir="false" afterPath="$PROJECT_DIR$/habit/services.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/poetry.lock" beforeDir="false" afterPath="$PROJECT_DIR$/poetry.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/pyproject.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/habit/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/habit/tests.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,6 +39,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Python tests.Python tests for tests.HabitTest.test_habit_retrieve.executor": "Run",
     "Python.services.executor": "Run",
     "Python.tasks.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -60,6 +54,28 @@
       <recent name="D:\Programs\PyCharm Community Edition 2024.1.1\MyDRFCourse" />
       <recent name="D:\Programs\PyCharm Community Edition 2024.1.1\MyDRFCourse\config" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Python tests for tests.HabitTest.test_habit_retrieve" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="MyDRFCourse" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/habit" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;tests.HabitTest.test_habit_retrieve&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python tests.Python tests for tests.HabitTest.test_habit_retrieve" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
