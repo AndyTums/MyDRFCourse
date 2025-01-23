@@ -1,3 +1,6 @@
+from unittest import TestCase
+
+from django.core.management import call_command
 from django.urls import reverse
 from rest_framework.test import APITestCase
 from rest_framework import status
@@ -98,7 +101,7 @@ class HabitTest(APITestCase):
         # Сверяем данные с ожидаемыми
         self.assertEqual(
             response.json(),
-            {'id': 2, 'email': 'TestCREATE@mail.ru', 'first_name': None, 'last_name': None,
+            {'id': 7, 'email': 'TestCREATE@mail.ru', 'first_name': None, 'last_name': None,
              'phone': 'TESTphone',
              'country': 'TESTcountry', 'photo': None}
 
@@ -116,3 +119,20 @@ class HabitTest(APITestCase):
 
         # Сверяем ожидаемое количество User в БД
         self.assertEqual(User.objects.count(), 0)
+
+
+class CreateSuperuserCommandTest(TestCase):
+    def test_create_superuser(self):
+        # Вызов команды
+        call_command('csu')
+
+        # Проверка, что пользователь создан
+        self.assertEqual(User.objects.count(), 1)
+
+        # Получение созданного пользователя
+        user = User.objects.first()
+
+        # Проверка атрибутов пользователя
+        self.assertEqual(user.email, "test@mail.ru")
+        self.assertTrue(user.check_password("1234"))
+        self.assertTrue(user.is_active)
