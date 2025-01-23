@@ -3,7 +3,7 @@ from users.models import User
 from users.permissions import IsUserProfile
 
 from users.serializer import UserSerializer
-from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
+from rest_framework.permissions import IsAdminUser, AllowAny
 
 
 class UserViewSet(ModelViewSet):

@@ -1,4 +1,4 @@
-from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework.permissions import IsAdminUser
 from rest_framework.viewsets import ModelViewSet
 
 from habit.models import Habit
