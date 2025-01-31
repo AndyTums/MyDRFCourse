@@ -34,11 +34,14 @@ INSTALLED_APPS = [
     "django_filters",
     'drf_yasg',
     'django_celery_beat',
+    'corsheaders',
+
     "habit",
     "users",
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -46,6 +49,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+
 ]
 
 ROOT_URLCONF = "config.urls"
@@ -71,7 +75,8 @@ WSGI_APPLICATION = "config.wsgi.application"
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     'DEFAULT_AUTHENTICATION_CLASSES': ['rest_framework_simplejwt.authentication.JWTAuthentication'],
-    'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.IsAuthenticated']
+    'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.AllowAny'],
+    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination', 'PAGE_SIZE': 3
 
 }
 
@@ -157,7 +162,6 @@ if CACHE_ENABLE:
         }
     }
 
-
 CELERY_TIMEZONE = TIME_ZONE
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
@@ -166,9 +170,18 @@ CELERY_BROKER_URL = 'redis://localhost:6379/0'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
-# CELERY_BEAT_SCHEDULE = {
-#     'check_is_active': {
-#         'task': 'users.tasks.check_is_active',
-#         'schedule': timedelta(seconds=10),
-#     },
-# }
+CELERY_BEAT_SCHEDULE = {
+    'check_is_active': {
+        'task': 'habit.tasks.send_message_to_user',
+        'schedule': timedelta(seconds=20),
+    },
+}
+
+CORS_ALLOW_ALL_ORIGINS = False
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8000"
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:8000"
+]
