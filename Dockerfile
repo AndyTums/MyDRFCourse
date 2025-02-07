@@ -1,6 +1,8 @@
 # Используем официальный slim-образ Python 3.12
 FROM python:3.12-slim
 
+ENV PYTHONUNBUFFERED 1
+
 # Устанавливаем рабочую директорию в контейнере
 WORKDIR /app
 
