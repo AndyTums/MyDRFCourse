@@ -51,7 +51,7 @@ jobs:
 
       - name: Test PostgreSQL connection
         run: |
-          psql -h localhost -U myapp_user -d myapp_test -c "SELECT 1;"
+          psql -h localhost -U postgres -d MyDRFCourse -c "SELECT 1;"
 
       - name: Check out code
         uses: actions/checkout@v3
