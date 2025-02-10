@@ -44,9 +44,9 @@ jobs:
 
     steps:
 
-      - name: Check PostgreSQL status
-        run: |
-          docker logs ${{ job.services.postgres.id }}
+#      - name: Check PostgreSQL status
+#        run: |
+#          docker logs ${{ job.services.postgres.id }}
 
       - name: Test PostgreSQL connection
         run: |
