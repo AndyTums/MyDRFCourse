@@ -46,7 +46,7 @@ jobs:
       DB_NAME: MyDRFCourse
       DB_USER: postgres
       DB_PASSWORD: 4988
-      DB_HOST: postgres
+      DB_HOST: host.docker.internal
       DB_PORT: 5432
 
 
