@@ -68,6 +68,7 @@ jobs:
 
       - name: Run migrations
         env:
+          SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
           DB_NAME: MyDRFCourse
           DB_USER: postgres
           DB_PASSWORD: 4988
