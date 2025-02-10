@@ -103,8 +103,8 @@ SIMPLE_JWT = {
 if 'test' in sys.argv:
     DATABASES = {
         'default': {
-            "ENGINE": "django.db.backends.sqlite3",
-            'NAME': BASE_DIR / "test.db.sqlite3",
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'test.db.sqlite3',
         }
     }
 
