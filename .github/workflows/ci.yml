@@ -24,7 +24,7 @@ jobs:
 
 
   test:
-#    needs: lint
+    needs: lint
     runs-on: ubuntu-latest
     env:
       SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
@@ -67,7 +67,7 @@ jobs:
         run: docker push -t ${{ secrets.DOCKER_HUB_USERNAME }}/myapp:${{ github.sha }} .
 
   deploy:
-#    needs: build
+    needs: build
     runs-on: ubuntu-latest
 
     steps:
