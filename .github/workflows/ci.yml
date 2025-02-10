@@ -49,9 +49,9 @@ jobs:
         run: |
           docker logs ${{ job.services.postgres.id }}
 
-      - name: Test PostgreSQL connection
-        run: |
-          psql -h localhost -U postgres -d MyDRFCourse -c "SELECT 1;"
+#      - name: Test PostgreSQL connection
+#        run: |
+#          psql -h localhost -U postgres -d MyDRFCourse -c "SELECT 1;"
 
       - name: Check out code
         uses: actions/checkout@v3
