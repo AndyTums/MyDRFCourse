@@ -1,4 +1,5 @@
 ﻿import os
+import sys
 from datetime import timedelta
 from pathlib import Path
 
@@ -95,10 +96,17 @@ DATABASES = {
         "NAME": os.getenv("NAME"),
         "USER": os.getenv("USER"),
         "PASSWORD": os.getenv("PASSWORD"),
-        "HOST": '',
-        "PORT": '',
+        "HOST": os.getenv("HOST"),
+        "PORT": os.getenv("PORT"),
     }
 }
+if 'test' in sys.argv:
+    DATABASES = {
+        'default': {
+            "ENGINE": "django.db.backends.sqlite3",
+            'NAME': BASE_DIR / "test.db.sqlite3",
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
