@@ -26,14 +26,17 @@ jobs:
   test:
 #    needs: lint
     runs-on: ubuntu-latest
+    env:
+      SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
+      DB_NAME: MyDRFCourse
+      DB_USER: postgres
+      DB_PASSWORD: 4988
+      DB_HOST: host.docker.internal
+      DB_PORT: 5432
 
     services:
       postgres:
         image: postgres:latest
-        env:
-          POSTGRES_DB: myapp_test
-          POSTGRES_USER: myapp_user
-          POSTGRES_PASSWORD: myapp_password
         ports:
           - '5432:5432'
         options: >-
@@ -48,6 +51,7 @@ jobs:
       - name: Check PostgreSQL status
         run: |
           docker logs ${{ job.services.postgres.id }}
+
       - name: Test PostgreSQL connection
         run: |
           psql -h localhost -U myapp_user -d myapp_test -c "SELECT 1;"
@@ -66,13 +70,6 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run migrations
-        env:
-          SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
-          DB_NAME: myapp_test
-          DB_USER: myapp_user
-          DB_PASSWORD: myapp_password
-          DB_HOST: localhost
-          DB_PORT: 5432
         run: |
           python manage.py migrate
 
