@@ -9,18 +9,12 @@ jobs:
     services:
       postgres:
         image: postgres:16
-        # Указываем имя тестовой базы, имя и пароль пользователя в открытом виде,
-        # ведь эта база будет работать только во время прогона тестов
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
           POSTGRES_DB: testdb
         ports:
           - 5432:5432
-        # Эта конструкция описывает проверку готовности сервиса postgres
-        # Если её не будет, то тесты могут запуститься раньше, чем сервер PostgreSQL
-        # В результате тесты опять решат, что базы нет, — и упадут
-        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
 
     steps:
@@ -65,47 +59,47 @@ jobs:
           POSTGRES_PORT: 5432
       run: python manage.py test
 
-#  deploy:
-#    runs-on: ubuntu-latest
-#    needs: test
-#
-#    steps:
-#    - name: Set up SSH
-#      uses: webfactory/ssh-agent@v0.8.1
-#      with:
-#        ssh-private-key: ${{ secrets.SSH_KEY }}
-#
-#    - name: Copy project files to server
-#      run: |
-#        rsync -avz --exclude '__pycache__' . ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }}:${{ secrets.DEPLOY_DIR }}
-#
-#    - name: Install dependencies on server
-#      run: |
-#        ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
-#          cd ${{ secrets.DEPLOY_DIR }}
-#          python3 -m venv venv
-#          source venv/bin/activate
-#          pip install -r requirements.txt
-#        EOF
-#
-#    - name: Apply migrations on server
-#      run: |
-#        ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
-#          cd ${{ secrets.DEPLOY_DIR }}
-#          source venv/bin/activate
-#          python manage.py migrate
-#        EOF
-#
-#    - name: Collect static files on server
-#      run: |
-#        ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
-#          cd ${{ secrets.DEPLOY_DIR }}
-#          source venv/bin/activate
-#          python manage.py collectstatic --noinput
-#        EOF
-#
-#    - name: Restart application
-#      run: |
-#        ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
-#          sudo systemctl restart myapp.service
-#        EOF
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+    - name: Set up SSH
+      uses: webfactory/ssh-agent@v0.8.1
+      with:
+        ssh-private-key: ${{ secrets.SSH_KEY }}
+
+    - name: Copy project files to server
+      run: |
+        rsync -avz --exclude '__pycache__' . ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }}:${{ secrets.DEPLOY_DIR }}
+
+    - name: Install dependencies on server
+      run: |
+        ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
+          cd ${{ secrets.DEPLOY_DIR }}
+          python3 -m venv venv
+          source venv/bin/activate
+          pip install -r requirements.txt
+        EOF
+
+    - name: Apply migrations on server
+      run: |
+        ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
+          cd ${{ secrets.DEPLOY_DIR }}
+          source venv/bin/activate
+          python manage.py migrate
+        EOF
+
+    - name: Collect static files on server
+      run: |
+        ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
+          cd ${{ secrets.DEPLOY_DIR }}
+          source venv/bin/activate
+          python manage.py collectstatic --noinput
+        EOF
+
+    - name: Restart application
+      run: |
+        ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
+          sudo systemctl restart myapp.service
+        EOF
