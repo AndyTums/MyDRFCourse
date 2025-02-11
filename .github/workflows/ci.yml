@@ -41,23 +41,26 @@ jobs:
           echo "PASSWORD=$(grep PASSWORD .env | cut -d '=' -f2)" >> $GITHUB_ENV
           echo "HOST=$(grep HOST .env | cut -d '=' -f2)" >> $GITHUB_ENV
           echo "PORT=$(grep PORT .env | cut -d '=' -f2)" >> $GITHUB_ENV
+          echo "SECRET_KEY=$(grep SECRET_KEY .env | cut -d '=' -f2)" >> $GITHUB_ENV
 
       - name: Run migrations
         env:
-          DB_NAME: ${{ env.NAME }}
-          DB_USER: ${{ env.USER }}
-          DB_PASSWORD: ${{ env.PASSWORD }}
-          DB_HOST: localhost
-          DB_PORT: 5432
+            SECRET_KEY : ${{ env.SECRET_KEY }}
+            NAME: ${{ env.NAME }}
+            USER: ${{ env.USER }}
+            PASSWORD: ${{ env.PASSWORD }}
+            HOST: localhost
+            PORT: 5432
         run: |
           python manage.py migrate
 
       - name: Run tests
         env:
-          DB_NAME: ${{ env.NAME }}
-          DB_USER: ${{ env.USER }}
-          DB_PASSWORD: ${{ env.PASSWORD }}
-          DB_HOST: localhost
-          DB_PORT: 5432
+            SECRET_KEY : ${{ env.SECRET_KEY }}
+            NAME: ${{ env.NAME }}
+            USER: ${{ env.USER }}
+            PASSWORD: ${{ env.PASSWORD }}
+            HOST: localhost
+            PORT: 5432
         run: |
           python manage.py test
