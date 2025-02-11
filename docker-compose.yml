@@ -63,6 +63,5 @@ services:
       - ./.env
 
 volumes:
-  postgres_data:
   static_volume:
   redis_data:
