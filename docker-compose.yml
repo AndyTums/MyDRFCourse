@@ -1,8 +1,26 @@
 services:
 
+  db:
+    image: postgres:16
+#    volumes:
+#      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    env_file:
+      - ./.env
+
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data env_file
+    env_file:
+      - ./.env
+
   web:
     build: .
-    command: sh -c "python manage.py runserver 0.0.0.0:8000"
+    command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/app
       - static_volume:/app/staticfiles
@@ -12,7 +30,7 @@ services:
       - db
       - redis
     env_file:
-      - .env
+      - ./.env
 
   nginx:
     build:
@@ -23,45 +41,26 @@ services:
     depends_on:
       - web
 
-
-  db:
-    image: postgres:16
-    env_file: .env
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
-
-  redis:
-    image: redis:7
-    ports:
-      - "6379:6379"
-    volumes:
-      - redis_data:/data env_file
-    env_file:
-      - .env
-
-
   celery:
     build: .
     command: >
       bash -c "celery -A config worker -l INFO -P eventlet"
-    env_file:
-      - ./.env
     depends_on:
       - redis
       - db
+    env_file:
+      - ./.env
 
   celery_beat:
     build: .
-    env_file:
-      - .env
     command: >
       bash -c "celery -A config beat -l INFO"
     depends_on:
       - redis
       - db
       - celery
+    env_file:
+      - ./.env
 
 volumes:
   postgres_data:
