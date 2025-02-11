@@ -94,11 +94,11 @@ SIMPLE_JWT = {
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": os.getenv("NAME", "MyDRFCourse"),
-        "USER": os.getenv("USER", "postgres"),
-        "PASSWORD": os.getenv("PASSWORD", "postgres"),
-        "HOST": os.getenv("HOST", "localhost"),
-        "PORT": os.getenv("PORT", "5432"),
+        "NAME": os.getenv("NAME", default="MyDRFCourse"),
+        "USER": os.getenv("USER", default="test"),
+        "PASSWORD": os.getenv("PASSWORD", default="postgres"),
+        "HOST": os.getenv("HOST", default="localhost"),
+        "PORT": os.getenv("PORT"),
     }
 }
 
