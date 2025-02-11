@@ -35,7 +35,12 @@ jobs:
 
     - name: Run tests
       env:
-          SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
+            SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: 4988
+            POSTGRES_DB: postgres
+            DB_HOST: localhost
+            DB_PORT: 5432
       run: python manage.py test
 
 #  deploy:
