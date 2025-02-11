@@ -12,8 +12,6 @@ jobs:
 
       - name: Set up Python
         uses: actions/setup-python@v4
-        with:
-          python-version: '3.12'
 
       - name: Install flake8
         run: |
@@ -32,8 +30,6 @@ jobs:
 
     - name: Set up Python
       uses: actions/setup-python@v4
-      with:
-        python-version: '3.12'
 
     - name: Cache pip
       uses: actions/cache@v3
@@ -59,13 +55,6 @@ jobs:
         python manage.py migrate
 
     - name: Run tests
-      env:
-#            SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: postgres
-          POSTGRES_HOST: host.docker.internal
-          POSTGRES_PORT: 5432
       run: python manage.py test
 
   deploy:
