@@ -44,6 +44,14 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
+    - name: Create database and user
+      env:
+        PGPASSWORD: 4988  # Пароль для пользователя postgres
+      run: |
+        psql -h localhost -U postgres -c "CREATE USER postgres WITH PASSWORD '4988';"
+        psql -h localhost -U postgres -c "CREATE DATABASE MyDRFCourse OWNER postgres;"
+        psql -h localhost -U postgres -c "GRANT ALL PRIVILEGES ON DATABASE MyDRFCourse TO postgres;"
+
     - name: Run makemigrations
       run: |
         export SECRET_KEY="${{ secrets.DJANGO_SECRET_KEY }}"
