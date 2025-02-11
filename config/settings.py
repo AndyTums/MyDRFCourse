@@ -97,7 +97,7 @@ DATABASES = {
         "NAME": os.getenv("NAME", "MyDRFCourse"),
         "USER": os.getenv("USER", "postgres"),
         "PASSWORD": os.getenv("PASSWORD", "4988"),
-        "HOST": os.getenv("HOST", "localhost"),
+        "HOST": os.getenv("HOST", "host.docker.internal"),
         "PORT": os.getenv("PORT", "5432"),
     }
 }
