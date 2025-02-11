@@ -28,7 +28,7 @@ services:
     image: postgres:16
     env_file: .env
     volumes:
-      - postgres_data:/var/run/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
 
