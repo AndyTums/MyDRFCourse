@@ -40,7 +40,7 @@ jobs:
 
       - name: Create database and user
         env:
-          PGPASSWORD: 4988  # Пароль для пользователя postgres
+          PGPASSWORD: postgres  # Пароль для пользователя postgres
         run: |
           psql -h localhost -U postgres -c "CREATE USER postgres WITH PASSWORD 'postgres';"
           psql -h localhost -U postgres -c "CREATE DATABASE MyDRFCourse OWNER postgres;"
