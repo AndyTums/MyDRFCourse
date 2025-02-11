@@ -1,12 +1,6 @@
 name: CI/CD Pipeline
 
-on:
-  push:
-    branches:
-      - feature_1
-  pull_request:
-    branches:
-      - feature_1
+on: [ push, pull_request ]
 
 jobs:
   test:
