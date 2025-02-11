@@ -8,21 +8,22 @@ jobs:
 
     services:
       postgres:
-        image: postgres:16
+        image: postgres:latest
         env:
-          POSTGRES_DB: ${{ vars.NAME || 'test_db' }}  # Имя базы данных
-          POSTGRES_USER: ${{ vars.USER || 'test_user' }}  # Пользователь
-          POSTGRES_PASSWORD: ${{ vars.PASSWORD || 'test_password' }}  # Пароль
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
         ports:
           - 5432:5432
-        options: >-
-          --health-cmd pg_isready
+        options: >
+          --health-cmd "pg_isready -U ${{ secrets.POSTGRES_USER }}"
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
       - name: Set up Python
         uses: actions/setup-python@v2
@@ -32,35 +33,10 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
-
-      - name: Load environment variables from .env
-        run: |
-          echo "NAME=$(grep NAME .env | cut -d '=' -f2)" >> $GITHUB_ENV
-          echo "USER=$(grep USER .env | cut -d '=' -f2)" >> $GITHUB_ENV
-          echo "PASSWORD=$(grep PASSWORD .env | cut -d '=' -f2)" >> $GITHUB_ENV
-          echo "HOST=$(grep HOST .env | cut -d '=' -f2)" >> $GITHUB_ENV
-          echo "PORT=$(grep PORT .env | cut -d '=' -f2)" >> $GITHUB_ENV
-          echo "SECRET_KEY=$(grep SECRET_KEY .env | cut -d '=' -f2)" >> $GITHUB_ENV
-
-      - name: Run migrations
-        env:
-            SECRET_KEY : ${{ env.SECRET_KEY }}
-            NAME: ${{ env.NAME }}
-            USER: ${{ env.USER }}
-            PASSWORD: ${{ env.PASSWORD }}
-            HOST: localhost
-            PORT: 5432
-        run: |
-          python manage.py migrate
+          pip install -r requirements.txt 
 
       - name: Run tests
         env:
-            SECRET_KEY : ${{ env.SECRET_KEY }}
-            NAME: ${{ env.NAME }}
-            USER: ${{ env.USER }}
-            PASSWORD: ${{ env.PASSWORD }}
-            HOST: localhost
-            PORT: 5432
+          DATABASE_URL: postgres://${{ secrets.POSTGRES_USER }}:${{ secrets.POSTGRES_PASSWORD }}@localhost:5432/${{ secrets.POSTGRES_DB }}
         run: |
-          python manage.py test
+            python manage.py test
