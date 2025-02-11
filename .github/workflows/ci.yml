@@ -42,9 +42,9 @@ jobs:
         env:
           PGPASSWORD: postgres  # Пароль для пользователя postgres
         run: |
-          psql -h localhost -U postgres -c "CREATE USER postgres WITH PASSWORD 'postgres';"
-          psql -h localhost -U postgres -c "CREATE DATABASE MyDRFCourse OWNER postgres;"
-          psql -h localhost -U postgres -c "GRANT ALL PRIVILEGES ON DATABASE MyDRFCourse TO postgres;"
+          psql -h localhost -U postgres -c "CREATE USER test WITH PASSWORD 'postgres';"
+          psql -h localhost -U postgres -c "CREATE DATABASE MyDRFCourse OWNER test;"
+          psql -h localhost -U postgres -c "GRANT ALL PRIVILEGES ON DATABASE MyDRFCourse TO test;"
 
       - name: Load environment variables from .env
         run: |
