@@ -68,7 +68,7 @@ services:
       - db
       - redis
     env_file:
-      - ./.env
+      - .env
 
   nginx:
     build:
@@ -91,7 +91,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     env_file:
-      - ./.env
+      - .env
 
   redis:
     image: redis:7
@@ -100,7 +100,7 @@ services:
     volumes:
       - redis_data:/data env_file
     env_file:
-      - ./.env
+      - .env
 
 
   celery:
@@ -116,7 +116,7 @@ services:
   celery_beat:
     build: .
     env_file:
-      - ./.env
+      - .env
     command: >
       bash -c "celery -A config beat -l INFO"
     depends_on:
