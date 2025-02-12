@@ -43,8 +43,7 @@ services:
 
   celery:
     build: .
-    command: >
-      bash -c "celery -A config worker -l INFO -P eventlet"
+    command: bash -c "celery -A config worker -l INFO"
     depends_on:
       - redis
       - db
