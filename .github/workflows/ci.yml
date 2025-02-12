@@ -96,20 +96,34 @@ jobs:
         run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/myapp:${{ github.sha }}
 
   deploy:
+    name: Deploy to Server
     runs-on: ubuntu-latest
-    needs: build
+    needs: test
 
     steps:
-    - name: Set up SSH
-      uses: webfactory/ssh-agent@v0.9.0
-      with:
-        ssh-private-key: ${{ secrets.SSH_KEY }}
+    # Проверяем репозиторий
+    - name: Checkout code
+      uses: actions/checkout@v3
 
+    # Устанавливаем Python
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.12
+
+    # Деплой на сервер с использованием пароля
     - name: Deploy to Server
+      env:
+        HOST: ${{ secrets.SERVER_IP }}          # IP-адрес
+        USERNAME: ${{ secrets.SSH_USER }}      # Пользователь для SSH
+        PASSWORD: ${{ secrets.SSH_KEY_PASSWORD }}  # Пароль для SSH
+        PROJECT_DIR: ${{ secrets.DEPLOY_DIR }}  # Путь к проекту на сервере
       run: |
-        ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
-          docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/myapp:${{ github.sha }}
-          docker stop myapp || true
-          docker rm myapp || true
-          docker run -d --name myapp -p 80:8000 ${{ secrets.DOCKER_HUB_USERNAME }}/myapp:${{ github.sha }}
+        sudo apt-get update && sudo apt-get install -y sshpass
+        sshpass -p "$PASSWORD" ssh -o StrictHostKeyChecking=no $USERNAME@$HOST << EOF
+          cd $PROJECT_DIR
+          git pull origin feature_1
+          source venv/bin/activate
+          pip install -r requirements.txt
+          python3 manage.py migrate
         EOF
