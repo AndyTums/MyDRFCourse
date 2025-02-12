@@ -20,7 +20,8 @@ services:
 
   web:
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
+    command: >
+      sh -c "python manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/app
       - static_volume:/app/staticfiles
@@ -52,8 +53,7 @@ services:
 
   celery_beat:
     build: .
-    command: >
-      bash -c "celery -A config beat -l INFO"
+    command: celery -A config beat -l INFO
     depends_on:
       - redis
       - db
