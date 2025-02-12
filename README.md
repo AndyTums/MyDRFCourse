@@ -6,6 +6,7 @@
 - **Управление привычками**: Создание, редактирование, удаление и отслеживание привычек.
 - **Периодические задачи**: Использование Celery и Celery Beat для напоминаний и уведомлений.
 - **Docker**: Простая установка и запуск с помощью Docker.
+- **Deploy**: Отправка проекта на удаленный сервер.
 
 ---
 
@@ -35,6 +36,9 @@
   - Celery
   - Celery Beat
   - PostgreSQL
+  - Docker
+  - Nginx
+  - Git Actions
 
 - **Авторизация**:
   - JWT (JSON Web Tokens)
@@ -161,6 +165,7 @@ CELERY_BEAT_SCHEDULE = {
 ``` bash
 habit-tracker/
 ├── .env
+├── .github/workflows/ci.yml
 ├── docker-compose.yml
 ├── Dockerfile
 ├── manage.py
@@ -170,12 +175,17 @@ habit-tracker/
 │   ├── serializers.py
 │   ├── views.py
 │   ├── tasks.py
-│   └── ...
+│   └── test.py
 └── myproject/
     ├── settings.py
     ├── urls.py
     └── ...
 ```
-### 6. Лицензия
+
+### 6. Использование Deploy
+#### Для быстрой загрузки проекта на сервер, используйте Git Actions -->> [.yml](./.github/workflows/ci.yml)
+Незабудьте внести ваши данные в переменное окружение, а так же запросить secrets. у владельца репозитория!
+
+### 7. Лицензия
 
 #### Этот проект распространяется под лицензией MIT. Подробности см. в файле LICENSE.
