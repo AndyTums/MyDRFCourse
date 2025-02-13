@@ -69,6 +69,11 @@ jobs:
           python manage.py test
         env:
           SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
+          POSTGRES_DB: MyDRFCourse
+          POSTGRES_USER: test
+          POSTGRES_PASSWORD: test
+          POSTGRES_HOST: localhost
+          POSTGRES_PORT: 5432
 
   build:
     runs-on: ubuntu-latest
