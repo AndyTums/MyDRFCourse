@@ -108,11 +108,6 @@ jobs:
         ssh-private-key: ${{ secrets.SSH_KEY }}
 
     - name: Deploy to Server
-      env:
-        HOST: ${{ secrets.SERVER_IP }}          # IP-адрес
-        USERNAME: ${{ secrets.SSH_USER }}      # Пользователь для SSH
-        PASSWORD: ${{ secrets.SSH_KEY_PASSWORD }}  # Пароль для SSH
-        PROJECT_DIR: ${{ secrets.DEPLOY_DIR }}
       run: |
         ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
           docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/myapp:${{ github.sha }}
