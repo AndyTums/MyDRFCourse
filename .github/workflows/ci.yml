@@ -110,7 +110,7 @@ jobs:
 
     - name: Deploy to Server
       run: |
-        ssh -t -o StrictHostKeyChecking=no ssh -l test 84.201.161.178 << 'EOF'
+        ssh -t -o StrictHostKeyChecking=no test@84.201.161.178 << 'EOF'
           sudo docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/myapp:${{ github.sha }}
           sudo docker stop MyDRFCourse || true
           sudo docker rm MyDRFCourse || true
