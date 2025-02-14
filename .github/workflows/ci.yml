@@ -111,8 +111,8 @@ jobs:
     - name: Deploy to Server
       run: |
         ssh -t -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
-          sudo docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/MyDRFCourse:${{ github.sha }}
-          sudo docker stop MyDRFCourse || true
-          sudo docker rm MyDRFCourse || true
-          sudo docker run -d --name MyDRFCourse -p 8000:8000 ${{ secrets.DOCKER_HUB_USERNAME }}/MyDRFCourse:${{ github.sha }}
+          sudo docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/mydrfcourse:${{ github.sha }}
+          sudo docker stop mydrfcourse || true
+          sudo docker rm mydrfcourse || true
+          sudo docker run -d --name mydrfcourse -p 8000:8000 ${{ secrets.DOCKER_HUB_USERNAME }}/mydrfcourse:${{ github.sha }}
         EOF
