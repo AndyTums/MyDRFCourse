@@ -14,6 +14,9 @@ class User(AbstractUser):
     last_name = models.CharField(
         max_length=50, blank=True, null=True, verbose_name="Фамилия"
     )
+    tg_chat_id = models.PositiveIntegerField(
+        verbose_name="ID чата в Telegram", blank=True, null=True
+    )
     phone = models.CharField(
         max_length=15, blank=True, null=True, verbose_name="Телефон"
     )
